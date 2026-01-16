@@ -1,74 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>zkverify.in - Coming Soon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>zkverify.in — Coming Soon</title>
+  <meta name="description" content="zkverify.in is launching soon. Stay updated on our zero-knowledge verification platform." />
+
+  <!-- Social Preview -->
+  <meta property="og:title" content="zkverify.in — Coming Soon" />
+  <meta property="og:description" content="Something amazing is coming. Get notified at launch." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --accent: #ff9800;
+      --accent-hover: #e68900;
+      --bg-1: #0f2027;
+      --bg-2: #203a43;
+      --bg-3: #2c5364;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      color: #ffffff;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
       text-align: center;
     }
+
     .container {
-      max-width: 600px;
-      padding: 20px;
+      width: 100%;
+      max-width: 560px;
+      padding: 32px 24px;
+      animation: fadeIn 1s ease forwards;
     }
+
     h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
+
     p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 32px;
     }
+
     .subscribe {
-      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
     }
+
+    label {
+      position: absolute;
+      left: -9999px;
+    }
+
     input[type="email"] {
-      padding: 10px;
-      border-radius: 5px;
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 14px;
+      border-radius: 8px;
       border: none;
-      width: 70%;
-      max-width: 300px;
+      font-size: 1rem;
+      outline: none;
     }
+
+    input[type="email"]:focus {
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.4);
+    }
+
     button {
-      padding: 10px 20px;
-      margin-left: 10px;
+      padding: 12px 22px;
+      border-radius: 8px;
       border: none;
-      border-radius: 5px;
-      background: #ff9800;
+      font-size: 1rem;
+      font-weight: 600;
+      background: var(--accent);
       color: #fff;
-      font-weight: bold;
       cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
     }
+
     button:hover {
-      background: #e68900;
+      background: var(--accent-hover);
+      transform: translateY(-1px);
     }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      min-height: 22px;
+      font-size: 0.95rem;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
     footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #bbb;
+      margin-top: 36px;
+      font-size: 0.85rem;
+      color: #cfd8dc;
+      opacity: 0.8;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <main class="container">
     <h1>🚀 zkverify.in</h1>
-    <p>Something amazing is coming soon.<br> Stay tuned!</p>
-    <div class="subscribe">
-      <input type="email" placeholder="Enter your email">
-      <button>Notify Me</button>
-    </div>
+    <p>
+      Something powerful is coming.<br />
+      Privacy-first verification, reimagined.
+    </p>
+
+    <form class="subscribe" id="subscribeForm" novalidate>
+      <label for="email">Email address</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+        aria-label="Email address"
+      />
+      <button type="submit">Notify Me</button>
+    </form>
+
+    <div class="message" id="message"></div>
+
     <footer>
-      © <script>document.write(new Date().getFullYear());</script> zkverify.in. All rights reserved.
+      © <span id="year"></span> zkverify.in. All rights reserved.
     </footer>
-  </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const form = document.getElementById("subscribeForm");
+    const emailInput = document.getElementById("email");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (!emailInput.checkValidity()) {
+        message.textContent = "Please enter a valid email address.";
+        message.style.color = "#ffccbc";
+        return;
+      }
+
+      message.textContent = "Thanks! You’ll be notified at launch 🚀";
+      message.style.color = "#c8e6c9";
+      form.reset();
+    });
+  </script>
+
 </body>
 </html>
